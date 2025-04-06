@@ -23,13 +23,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r .scripts/requirements.txt
+        pip install -r scripts/requirements.txt
 
     - name: Index pages
       env:
         REPO_PATH: ${{ github.repository }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python .scripts/index.py
+      run: python scripts/index.py
 
     - name: Push New Index
       run: |

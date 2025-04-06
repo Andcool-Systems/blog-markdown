@@ -6,12 +6,10 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
-
 PAGES_PATH = 'pages'
 REPO_PATH = os.environ.get('REPO_PATH') or 'Andcool-Systems/blog-markdown'
-
-
 RE_EXPR = r"[^\w\-\.~]"
+
 logger = logging.getLogger('Index')
 logging.basicConfig(
     level=logging.INFO,
@@ -64,16 +62,17 @@ for page in pages:
     logger.log(logging.INFO, 'Updating index...')
     commits = commit_history_file(REPO_PATH, f'{path}/page.md')
     collaborators = list(
-        set(map(lambda commit: commit['commit']['author']['name'], commits)))
+        set(map(lambda commit: commit['author']['login'], commits)))
     file_meta = get_meta_for_page(path)
     if page not in index_json:
         author = commits[-1]['commit']['author']
+        author_login = commits[-1]['author']['login']
 
         index_json[page] = {
             'title': file_meta['title'],
             'description': file_meta['description'],
             'created': author['date'],
-            'original_author': author['name'],
+            'original_author': author_login,
             'collaborators': collaborators
         }
 
