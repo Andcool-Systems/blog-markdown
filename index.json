@@ -1,10 +1,20 @@
 {
     "page1": {
-        "title": "",
-        "description": "",
-        "created": "",
-        "original_author": "Andcool",
+        "title": "Page 1",
+        "description": "First test page",
+        "created": "2025-04-06T13:42:27Z",
+        "original_author": "Andcool-Systems",
         "collaborators": [
+            "Andcool-Systems"
+        ]
+    },
+    "page2": {
+        "title": "Page 2",
+        "description": "Вторая тестовая страница",
+        "created": "2025-04-06T13:42:27Z",
+        "original_author": "Andcool-Systems",
+        "collaborators": [
+            "Andcool-Systems",
             "GhostDEV"
         ]
     }

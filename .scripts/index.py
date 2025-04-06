@@ -47,7 +47,7 @@ def check_page(path: str) -> bool:
     check_meta(meta)
 
 
-with open('index.json', 'r') as index_f:
+with open('index.json', 'r', encoding='utf-8') as index_f:
     index_json = json.load(index_f)
 
 
@@ -56,16 +56,28 @@ for page in pages:
     path = f'{PAGES_PATH}/{page}'
     check_page(path)
 
+    logger.log(logging.INFO, 'Updating index...')
     commits = commit_history_file(REPO_PATH, f'{path}/page.md')
+    collaborators = list(
+        set(map(lambda commit: commit['commit']['author']['name'], commits)))
+    file_meta = get_meta_for_page(path)
     if page not in index_json:
-        file_meta = get_meta_for_page(path)
-        author = commits[-1]['commit']['committer']
+        author = commits[-1]['commit']['author']
 
-        index_json['page'] = {
+        index_json[page] = {
             'title': file_meta['title'],
             'description': file_meta['description'],
             'created': author['date'],
-            'original_author': author['name']
+            'original_author': author['name'],
+            'collaborators': collaborators
         }
 
-print(index_json)
+    else:
+        index_json[page]['title'] = file_meta['title']
+        index_json[page]['description'] = file_meta['description']
+        index_json[page]['collaborators'] = collaborators
+
+with open('index.json', 'w+', encoding='utf-8') as index_file:
+    json.dump(index_json, index_file, indent=4, ensure_ascii=False)
+
+logger.log(logging.INFO, 'Index updated and saved to index.json')
