@@ -1,0 +1,3 @@
+.scripts/.env
+.scripts/__pycache__
+test.json
