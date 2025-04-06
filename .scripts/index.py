@@ -1,6 +1,7 @@
 from github import commit_history_file
 import logging
 import os
+import re
 import json
 from dotenv import load_dotenv
 load_dotenv()
@@ -10,6 +11,7 @@ PAGES_PATH = 'pages'
 REPO_PATH = os.environ.get('REPO_PATH') or 'Andcool-Systems/blog-markdown'
 
 
+RE_EXPR = r"[^\w\-\.~]"
 logger = logging.getLogger('Index')
 logging.basicConfig(
     level=logging.INFO,
@@ -53,6 +55,9 @@ with open('index.json', 'r', encoding='utf-8') as index_f:
 
 pages = os.listdir(PAGES_PATH)
 for page in pages:
+    if re.search(RE_EXPR, page) or '/' in page:
+        raise Exception(f'Page name contains forbidden characters!')
+
     path = f'{PAGES_PATH}/{page}'
     check_page(path)
 
