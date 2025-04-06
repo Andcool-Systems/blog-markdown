@@ -6,12 +6,10 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
-
 PAGES_PATH = 'pages'
 REPO_PATH = os.environ.get('REPO_PATH') or 'Andcool-Systems/blog-markdown'
-
-
 RE_EXPR = r"[^\w\-\.~]"
+
 logger = logging.getLogger('Index')
 logging.basicConfig(
     level=logging.INFO,
