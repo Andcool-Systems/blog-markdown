@@ -67,7 +67,10 @@ if not affected_paths:
     logger.log(logging.ERROR, 'No affected pages found, exiting...')
     sys.exit(0)
 
-for path in affected_paths:
+pages_for_index = set([
+    f'{PAGES_PATH}/{page}' for page in set(os.listdir(PAGES_PATH)) - set(index_json.keys())] + affected_paths)
+
+for path in pages_for_index:
     page = path.replace(f'{PAGES_PATH}/', '')
     if re.search(RE_EXPR, page) or '/' in page:
         raise Exception(f'Page name contains forbidden characters!')
@@ -75,10 +78,13 @@ for path in affected_paths:
 
     logger.log(logging.INFO, 'Updating index...')
     commits = github.commit_history_file(REPO_PATH, f'{path}')
+    author_login = commits[-1]['author']['login']
 
     counts = {}
     for commit in commits:
         login = commit['author']['login']
+        if author_login == login:
+            continue
         counts[login] = counts.get(login, 0) + 1
 
     collaborators = [login for login, _ in sorted(
@@ -87,8 +93,6 @@ for path in affected_paths:
     file_meta = get_meta_for_page(path)
     if page not in index_json:
         author = commits[-1]['commit']['author']
-        author_login = commits[-1]['author']['login']
-
         index_json[page] = {
             'title': file_meta['title'],
             'description': file_meta['description'],
@@ -96,7 +100,6 @@ for path in affected_paths:
             'original_author': author_login,
             'collaborators': collaborators
         }
-
     else:
         index_json[page]['title'] = file_meta['title']
         index_json[page]['description'] = file_meta['description']
