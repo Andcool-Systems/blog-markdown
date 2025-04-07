@@ -19,7 +19,6 @@ def commit_history_file(repo_url: str, file_path: str):
 
 def get_commit_changes(repo_url: str, sha: str) -> dict:
     latest_run = get_latest_workflow(repo_url)['workflow_runs'][0]['head_sha']
-    print(latest_run, sha)
     response = requests.get(
         f'{GITHUB_API_URL}/repos/{repo_url}/compare/{latest_run}...{sha}', headers={'Authorization': f'Bearer {TOKEN}'})
 
