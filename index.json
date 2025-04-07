@@ -1,12 +1,10 @@
 {
     "page1": {
         "title": "Page 1",
-        "description": "First test page",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam fermentum sem ac accumsan feugiat. Donec non vestibulum nibh. Nulla vel sagittis ipsum, quis scelerisque purus.",
         "created": "2025-04-06T13:42:27Z",
         "original_author": "Andcool-Systems",
-        "collaborators": [
-            "Andcool-Systems"
-        ]
+        "collaborators": []
     },
     "page2": {
         "title": "Page 2",
@@ -14,7 +12,6 @@
         "created": "2025-04-06T13:42:27Z",
         "original_author": "Andcool-Systems",
         "collaborators": [
-            "Andcool-Systems",
             "GhostDEV159"
         ]
     },
@@ -23,8 +20,6 @@
         "description": "description",
         "created": "2025-04-06T14:14:23Z",
         "original_author": "Andcool-Systems",
-        "collaborators": [
-            "Andcool-Systems"
-        ]
+        "collaborators": []
     }
 }
