@@ -29,6 +29,7 @@ jobs:
       env:
         REPO_PATH: ${{ github.repository }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COMMIT_SHA: ${{ github.sha }}
       run: python scripts/index.py
 
     - name: Push New Index
